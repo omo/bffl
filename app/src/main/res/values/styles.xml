@@ -3,6 +3,33 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:padding">0px</item>
+    </style>
+
+    <style name="build_card_headline">
+        <!-- http://stackoverflow.com/questions/12128331/how-to-change-fontfamily-of-textview-in-android -->
+        <item name="android:background">#00000000</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">48dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="build_card_details">
+        <item name="android:textColor">#ddd</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="build_card_report" parent="build_card_details">
+        <!--
+        <item name="android:typeface">monospace</item>
+        <item name="android:fontFamily">monospace</item>
+          -->
     </style>
 
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<es.flakiness.bffl.BuildCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="200dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <ImageView
+            android:id="@+id/build_card_image"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <LinearLayout
+            android:background="#44000000"
+            android:layout_alignTop="@id/build_card_image"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
+            <TextView
+                style="@style/build_card_headline"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Failed"/>
+            <TextView
+                style="@style/build_card_details"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/build_card_image"
+                android:text="1 minutes ago, took 12 minutes."/>
+            <TextView
+                style="@style/build_card_report"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/build_card_image"
+                android:text="ninja -j 500 -C ./out/Debug chrome"/>
+        </LinearLayout>
+    </RelativeLayout>
+</es.flakiness.bffl.BuildCardView>

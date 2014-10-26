@@ -4,16 +4,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 public class MainActivity extends Activity {
+
+    @InjectView(R.id.build_list)
+    BuildListView mBuildList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
+        mBuildList.setAdapter(new BuildListAdapter());
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

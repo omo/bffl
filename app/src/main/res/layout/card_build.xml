@@ -2,8 +2,7 @@
 
 <es.flakiness.bffl.BuildCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="200dp"
-    >
+    android:layout_height="200dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -21,21 +20,24 @@
             android:padding="24dp">
             <TextView
                 style="@style/build_card_headline"
+                android:id="@+id/build_card_headline"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Failed"/>
+                android:text=""/>
             <TextView
                 style="@style/build_card_details"
+                android:id="@+id/build_card_timestamp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/build_card_image"
-                android:text="1 minutes ago, took 12 minutes."/>
+                android:text=""/>
             <TextView
-                style="@style/build_card_report"
+                style="@style/build_card_details"
+                android:id="@+id/build_card_report"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/build_card_image"
-                android:text="ninja -j 500 -C ./out/Debug chrome"/>
+                android:text=""/>
         </LinearLayout>
     </RelativeLayout>
 </es.flakiness.bffl.BuildCardView>

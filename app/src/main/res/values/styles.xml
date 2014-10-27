@@ -25,11 +25,4 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="build_card_report" parent="build_card_details">
-        <!--
-        <item name="android:typeface">monospace</item>
-        <item name="android:fontFamily">monospace</item>
-          -->
-    </style>
-
 </resources>

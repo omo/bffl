@@ -61,6 +61,7 @@ public class BuildListAdapter implements ListAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         BuildCardView theView = null != view ? (BuildCardView)view : createView(viewGroup);
+        theView.setPreso(i % 2 == 0 ? BuildCardPreso.getMockFailInstance() : BuildCardPreso.getMockPassInstance());
         return theView;
     }
 

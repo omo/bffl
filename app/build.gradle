@@ -24,7 +24,7 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.2+'
     compile 'com.squareup:otto:1.3.5+'
     compile 'nl.qbusict:cupboard:+'
-    compile 'com.jakewharton:butterknife:5.1.2+'
+    compile 'com.jakewharton:butterknife:6.0.0+'
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.squareup.picasso:picasso:2.3.4+'

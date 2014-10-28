@@ -1,12 +1,16 @@
 package es.flakiness.bffl;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -15,9 +19,11 @@ import butterknife.InjectView;
 public class BuildCardView extends CardView {
 
     @InjectView(R.id.build_card_image) ImageView mImage;
+    @InjectView(R.id.build_card_texts) LinearLayout mTexts;
     @InjectView(R.id.build_card_headline) TextView mHeadline;
     @InjectView(R.id.build_card_timestamp) TextView mTimestamp;
     @InjectView(R.id.build_card_report) TextView mReport;
+    @Inject Picasso mPicasso;
 
     BuildCardPreso mPreso = BuildCardPreso.getUncertainInstance();
 
@@ -36,21 +42,29 @@ public class BuildCardView extends CardView {
     public void setPreso(BuildCardPreso preso) {
         // TODO(morrita): Ellipsize: http://stackoverflow.com/questions/4700650/how-do-i-set-the-android-text-view-to-cut-any-letters-that-dont-fit-in-a-layout
         mPreso = preso;
+        mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));
         mHeadline.setText(mPreso.getStatusText());
         mReport.setText(String.format("%s", mPreso.getReport()));
         mTimestamp.setText(String.format("%s ago, took %s", mPreso.getAgeText(), mPreso.getDurationText()));
-        // TODO(morrita): Update styles based on the status.
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.inject(this);
+        App.get(getContext()).inject(this);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        Picasso.with(getContext()).load(mPreso.getImageURL()).resize(getWidth(), getHeight()).centerCrop().into(mImage);
+        // This have to be here because we refer the view size.
+        mPicasso.load(mPreso.getImageURL()).resize(getWidth(), getHeight()).centerCrop().into(mImage);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mPicasso.cancelRequest(mImage);
     }
 }

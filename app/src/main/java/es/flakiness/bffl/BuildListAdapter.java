@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
+import javax.inject.Inject;
+
+import dagger.Provides;
+
 public class BuildListAdapter implements ListAdapter {
 
     private DataSetObservable mObservable = new DataSetObservable();

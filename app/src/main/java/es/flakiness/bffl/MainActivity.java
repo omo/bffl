@@ -12,15 +12,10 @@ import butterknife.InjectView;
 
 public class MainActivity extends Activity {
 
-    @InjectView(R.id.build_list)
-    BuildListView mBuildList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-        mBuildList.setAdapter(new BuildListAdapter());
     }
 
     @Override

@@ -38,9 +38,11 @@ public class App extends Application {
     }
 
     private ObjectGraph mGraph;
+    private DatabaseOpenHelper mDatabaseHelper;
 
     @Override
     public void onCreate() {
+        mDatabaseHelper = new DatabaseOpenHelper(this);
         mGraph = ObjectGraph.create(new Mod(this));
     }
 

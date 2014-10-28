@@ -11,12 +11,15 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
+import es.flakiness.shuttle.CentralStation;
+import es.flakiness.shuttle.Station;
 
 public class App extends Application {
 
     @Module(injects = {
             BuildCardView.class,
             BuildListView.class,
+            BuildListAdapter.class
     })
     public static class Mod {
         private App mApp;
@@ -30,10 +33,8 @@ public class App extends Application {
             return Picasso.with(mApp);
         }
 
-        @Provides
-        public BuildListAdapter provideListAdapter() {
-            return new BuildListAdapter();
-        }
+        @Provides @Singleton
+        public Station provideStation() { return CentralStation.getsInstance(); }
     }
 
     private ObjectGraph mGraph;

@@ -11,10 +11,17 @@ import android.widget.ListAdapter;
 import javax.inject.Inject;
 
 import dagger.Provides;
+import es.flakiness.shuttle.Station;
 
 public class BuildListAdapter implements ListAdapter {
 
     private DataSetObservable mObservable = new DataSetObservable();
+    private Station mStation;
+
+    @Inject
+    public BuildListAdapter(Station station) {
+        mStation = station;
+    }
 
     @Override
     public boolean areAllItemsEnabled() {

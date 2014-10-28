@@ -2,7 +2,6 @@ package es.flakiness.bffl;
 
 import android.app.Application;
 import android.content.Context;
-import android.view.View;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +16,7 @@ import es.flakiness.shuttle.Station;
 public class App extends Application {
 
     @Module(injects = {
-            BuildCardView.class,
+            BuildView.class,
             BuildListView.class,
             BuildListAdapter.class
     })

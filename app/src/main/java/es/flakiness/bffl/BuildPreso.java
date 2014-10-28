@@ -1,27 +1,27 @@
 package es.flakiness.bffl;
 
-public class BuildCardPreso {
+public class BuildPreso {
 
     private BuildStatus mBuildStatus;
     private String mImageURL;
     private String mReport;
 
-    private static BuildCardPreso sUncertain = new BuildCardPreso(BuildStatus.UNCERTAIN, "", "");
+    private static BuildPreso sUncertain = new BuildPreso(BuildStatus.UNCERTAIN, "", "");
 
-    public static BuildCardPreso getUncertainInstance() {
+    public static BuildPreso getUncertainInstance() {
         return sUncertain;
     }
 
-    public static BuildCardPreso getMockFailInstance() {
-        return new BuildCardPreso(BuildStatus.FAILED, "https://farm8.staticflickr.com/7301/9935571905_674272afd3_b.jpg", "ninja -j 500 -C ./out/Debug chrome");
+    public static BuildPreso getMockFailInstance() {
+        return new BuildPreso(BuildStatus.FAILED, "https://farm8.staticflickr.com/7301/9935571905_674272afd3_b.jpg", "ninja -j 500 -C ./out/Debug chrome");
     }
 
-    public static BuildCardPreso getMockPassInstance() {
+    public static BuildPreso getMockPassInstance() {
         // https://www.flickr.com/photos/lens-cap/15158953820
-        return new BuildCardPreso(BuildStatus.PASSED, "https://farm3.staticflickr.com/2943/15158953820_54028b62e9_c.jpg", "ninja -j 500 -C ./out/Debug chrome");
+        return new BuildPreso(BuildStatus.PASSED, "https://farm3.staticflickr.com/2943/15158953820_54028b62e9_c.jpg", "ninja -j 500 -C ./out/Debug chrome");
     }
 
-    public BuildCardPreso(BuildStatus status, String imageURL, String report) {
+    public BuildPreso(BuildStatus status, String imageURL, String report) {
         mBuildStatus = status;
         mImageURL = imageURL;
         mReport = report;

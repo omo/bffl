@@ -1,6 +1,5 @@
 package es.flakiness.bffl;
 
-import android.content.Context;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.widget.ListAdapter;
 
 import javax.inject.Inject;
 
-import dagger.Provides;
 import es.flakiness.shuttle.Station;
 
 public class BuildListAdapter implements ListAdapter {
@@ -65,14 +63,14 @@ public class BuildListAdapter implements ListAdapter {
         return true;
     }
 
-    private BuildCardView createView(ViewGroup parent) {
-        return (BuildCardView)LayoutInflater.from(parent.getContext()).inflate(R.layout.card_build, parent, false);
+    private BuildView createView(ViewGroup parent) {
+        return (BuildView)LayoutInflater.from(parent.getContext()).inflate(R.layout.card_build, parent, false);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        BuildCardView theView = null != view ? (BuildCardView)view : createView(viewGroup);
-        theView.setPreso(i % 2 == 0 ? BuildCardPreso.getMockFailInstance() : BuildCardPreso.getMockPassInstance());
+        BuildView theView = null != view ? (BuildView)view : createView(viewGroup);
+        theView.setPreso(i % 2 == 0 ? BuildPreso.getMockFailInstance() : BuildPreso.getMockPassInstance());
         return theView;
     }
 

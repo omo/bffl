@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 // TODO: set default background color
-public class BuildCardView extends CardView {
+public class BuildView extends CardView {
 
     @InjectView(R.id.build_card_image) ImageView mImage;
     @InjectView(R.id.build_card_texts) LinearLayout mTexts;
@@ -25,21 +25,21 @@ public class BuildCardView extends CardView {
     @InjectView(R.id.build_card_report) TextView mReport;
     @Inject Picasso mPicasso;
 
-    BuildCardPreso mPreso = BuildCardPreso.getUncertainInstance();
+    BuildPreso mPreso = BuildPreso.getUncertainInstance();
 
-    public BuildCardView(Context context) {
+    public BuildView(Context context) {
         super(context);
     }
 
-    public BuildCardView(Context context, AttributeSet attrs) {
+    public BuildView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BuildCardView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BuildView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setPreso(BuildCardPreso preso) {
+    public void setPreso(BuildPreso preso) {
         // TODO(morrita): Ellipsize: http://stackoverflow.com/questions/4700650/how-do-i-set-the-android-text-view-to-cut-any-letters-that-dont-fit-in-a-layout
         mPreso = preso;
         mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));

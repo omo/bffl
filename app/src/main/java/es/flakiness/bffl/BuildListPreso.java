@@ -11,13 +11,13 @@ import javax.inject.Inject;
 
 import es.flakiness.shuttle.Station;
 
-public class BuildListAdapter implements ListAdapter {
+public class BuildListPreso implements ListAdapter {
 
     private DataSetObservable mObservable = new DataSetObservable();
     private Station mStation;
 
     @Inject
-    public BuildListAdapter(Station station) {
+    public BuildListPreso(Station station) {
         mStation = station;
     }
 

@@ -1,8 +1,6 @@
 package es.flakiness.bffl;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
@@ -10,7 +8,8 @@ import javax.inject.Inject;
 
 public class BuildListView extends ListView {
 
-    @Inject BuildListAdapter mAdapter;
+    @Inject
+    BuildListPreso mAdapter;
 
     public BuildListView(Context context) {
         super(context);

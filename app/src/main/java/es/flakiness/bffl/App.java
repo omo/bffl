@@ -18,7 +18,7 @@ public class App extends Application {
     @Module(injects = {
             BuildView.class,
             BuildListView.class,
-            BuildListAdapter.class
+            BuildListPreso.class
     })
     public static class Mod {
         private App mApp;

@@ -114,7 +114,7 @@ public class CentralStationTest extends TestCase {
         int nTasks = 4;
         assertTrue(nTasks < nThreads);
         for (int i = 0; i < nTasks; i++)
-            target.getmExecutor().execute(getShuttle);
+            target.getExecutor().execute(getShuttle);
         notification.notifyDone();
         for (Shuttle s : shuttles)
             assertEquals(shuttles.peek(), s);

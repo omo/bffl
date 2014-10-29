@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import nl.qbusict.cupboard.CupboardFactory;
 
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
+    static {
+        CupboardFactory.cupboard().register(Build.class);
+        CupboardFactory.cupboard().register(Picture.class);
+    }
+
     public static String DATABASE_NAME = "bffl";
     public static int DATABASE_VERSION = 1;
 

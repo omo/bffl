@@ -1,5 +1,7 @@
 package es.flakiness.shuttle;
 
+import com.squareup.otto.ThreadEnforcer;
+
 import java.util.concurrent.Executor;
 
 class ExecutorShuttle extends ShuttleBus {
@@ -7,7 +9,7 @@ class ExecutorShuttle extends ShuttleBus {
     private Executor mExecutor;
 
     public ExecutorShuttle(String name, Executor executor) {
-        super(name);
+        super(ThreadEnforcer.ANY, name);
         mExecutor = executor;
     }
 

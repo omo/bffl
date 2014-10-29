@@ -4,18 +4,19 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.google.common.eventbus.EventBus;
+import com.squareup.otto.ThreadEnforcer;
 
 public class HandlerShuttle extends ShuttleBus {
 
     private Handler mHandler;
 
-    public HandlerShuttle(String name, Handler handler) {
-        super(name);
+    public HandlerShuttle(ThreadEnforcer enforcer, String name, Handler handler) {
+        super(enforcer, name);
         mHandler = handler;
     }
 
     public HandlerShuttle(String name) {
-        this(name, new Handler(Looper.getMainLooper()));
+        this(ThreadEnforcer.MAIN, name, new Handler(Looper.getMainLooper()));
     }
 
     public HandlerShuttle() {

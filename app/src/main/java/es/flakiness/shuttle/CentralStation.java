@@ -27,7 +27,7 @@ public class CentralStation implements Station {
     private Executor mExecutor;
     private HandlerShuttle mMain;
     private ExecutorShuttle mBackground;
-    private ConcurrentHashMap<Object, SequentialShuttle> mBoundSequences = new ConcurrentHashMap<Object, SequentialShuttle>();
+    private ConcurrentHashMap<Sequence, SequentialShuttle> mBoundSequences = new ConcurrentHashMap();
 
     public CentralStation(String name, Executor executor) {
         mName = name;
@@ -44,8 +44,12 @@ public class CentralStation implements Station {
         this("");
     }
 
+    Executor getmExecutor() {
+        return mExecutor;
+    }
+
     @Override
-    public SequentialShuttle sequential(Object key) {
+    public SequentialShuttle sequential(Sequence key) {
         SequentialShuttle found = mBoundSequences.get(key);
         if (found != null)
             return found;

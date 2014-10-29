@@ -1,5 +1,7 @@
 package es.flakiness.shuttle;
 
+import com.squareup.otto.ThreadEnforcer;
+
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -49,7 +51,7 @@ public class SequentialShuttle extends ShuttleBus {
     }
 
     public SequentialShuttle(String name, Executor executor) {
-        super(name);
+        super(ThreadEnforcer.ANY, name);
         mExecutor = executor;
     }
 }

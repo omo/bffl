@@ -12,8 +12,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.ObjectGraph;
 import dagger.Provides;
-import es.flakiness.shuttle.CentralStation;
-import es.flakiness.shuttle.Station;
 import nl.qbusict.cupboard.Cupboard;
 import nl.qbusict.cupboard.CupboardFactory;
 import nl.qbusict.cupboard.DatabaseCompartment;
@@ -23,7 +21,6 @@ public class App extends Application {
     private ObjectGraph mGraph;
 
     @Inject PictureStore mPictureStore;
-    @Inject Station mStation;
 
     @Override
     public void onCreate() {

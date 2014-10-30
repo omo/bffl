@@ -9,16 +9,12 @@ import android.widget.ListAdapter;
 
 import javax.inject.Inject;
 
-import es.flakiness.shuttle.Station;
-
 public class BuildListPreso implements ListAdapter {
 
     private DataSetObservable mObservable = new DataSetObservable();
-    private Station mStation;
 
     @Inject
-    public BuildListPreso(Station station) {
-        mStation = station;
+    public BuildListPreso() {
     }
 
     @Override

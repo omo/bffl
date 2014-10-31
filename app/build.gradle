@@ -28,6 +28,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.squareup.picasso:picasso:2.3.4+'
+    compile 'io.reactivex:rxjava:1.0.0-rc.8'
+    compile 'io.reactivex:rxandroid:0.22.0+'
+    compile 'io.reactivex:rxjava-async-util:0.21.0+'
+
     // Doesn't work so far.
     //compile 'com.android.support:recyclerview-v7:21.0.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])

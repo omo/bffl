@@ -10,13 +10,16 @@ import dagger.Module;
 import dagger.Provides;
 import nl.qbusict.cupboard.CupboardFactory;
 import nl.qbusict.cupboard.DatabaseCompartment;
+import rx.Scheduler;
+import rx.schedulers.Schedulers;
 
 @Module(injects = {
         App.class,
         BuildView.class,
         BuildListView.class,
         BuildListPreso.class,
-        PictureStore.class
+        PictureStore.class,
+        MainActivity.class,
 })
 public class AppModule {
     private Context mApp;
@@ -27,8 +30,7 @@ public class AppModule {
         mDatabaseHelper = new DatabaseOpenHelper(mApp);
     }
 
-    @Provides
-    @Singleton
+    @Provides @Singleton
     public Picasso providePicasso() {
         return Picasso.with(mApp);
     }

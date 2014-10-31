@@ -34,4 +34,5 @@ public class App extends Application {
     public <T> void inject(T target) {
         mGraph.inject(target);
     }
+    public <T> T make(Class<T> clazz) { return mGraph.get(clazz); }
 }

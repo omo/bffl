@@ -9,6 +9,8 @@ import android.widget.ListAdapter;
 
 import javax.inject.Inject;
 
+import rx.subjects.PublishSubject;
+
 public class BuildListPreso implements ListAdapter {
 
     private DataSetObservable mObservable = new DataSetObservable();
@@ -66,7 +68,10 @@ public class BuildListPreso implements ListAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         BuildView theView = null != view ? (BuildView)view : createView(viewGroup);
-        theView.setPreso(i % 2 == 0 ? BuildPreso.getMockFailInstance() : BuildPreso.getMockPassInstance());
+        PublishSubject<BuildPreso> subj = PublishSubject.create();
+        theView.present(subj);
+        subj.onNext(i % 2 == 0 ? BuildPreso.getMockFailInstance() : BuildPreso.getMockPassInstance());
+        subj.onCompleted();
         return theView;
     }
 

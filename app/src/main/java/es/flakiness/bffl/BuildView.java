@@ -14,6 +14,9 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import rx.Observable;
+import rx.Subscription;
+import rx.functions.Action1;
 
 // TODO: set default background color
 public class BuildView extends CardView {
@@ -25,7 +28,8 @@ public class BuildView extends CardView {
     @InjectView(R.id.build_card_report) TextView mReport;
     @Inject Picasso mPicasso;
 
-    BuildPreso mPreso = BuildPreso.getUncertainInstance();
+    private Subscription mSubscription;
+    private BuildPreso mLastPreso;
 
     public BuildView(Context context) {
         super(context);
@@ -39,13 +43,20 @@ public class BuildView extends CardView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setPreso(BuildPreso preso) {
-        // TODO(morrita): Ellipsize: http://stackoverflow.com/questions/4700650/how-do-i-set-the-android-text-view-to-cut-any-letters-that-dont-fit-in-a-layout
-        mPreso = preso;
-        mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));
-        mHeadline.setText(mPreso.getStatusText());
-        mReport.setText(String.format("%s", mPreso.getReport()));
-        mTimestamp.setText(String.format("%s ago, took %s", mPreso.getAgeText(), mPreso.getDurationText()));
+    public void present(Observable<BuildPreso> preso) {
+        assert mSubscription == null;
+        mSubscription = preso.subscribe(new Action1<BuildPreso>() {
+            @Override
+            public void call(BuildPreso buildPreso) {
+                // TODO(morrita): Ellipsize: http://stackoverflow.com/questions/4700650/how-do-i-set-the-android-text-view-to-cut-any-letters-that-dont-fit-in-a-layout
+                mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));
+                mHeadline.setText(buildPreso.getStatusText());
+                mReport.setText(String.format("%s", buildPreso.getReport()));
+                mTimestamp.setText(String.format("%s ago, took %s", buildPreso.getAgeText(), buildPreso.getDurationText()));
+                // TODO(morrita): Request image if layout is already made. Probably PicassoImageView is needed.
+                mLastPreso = buildPreso;
+            }
+        });
     }
 
     @Override
@@ -59,12 +70,17 @@ public class BuildView extends CardView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         // This have to be here because we refer the view size.
-        mPicasso.load(mPreso.getImageURL()).resize(getWidth(), getHeight()).centerCrop().into(mImage);
+        if (null != mLastPreso)
+           mPicasso.load(mLastPreso.getImageURL()).resize(getWidth(), getHeight()).centerCrop().into(mImage);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mPicasso.cancelRequest(mImage);
+        if (null != mSubscription) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
+        }
     }
 }

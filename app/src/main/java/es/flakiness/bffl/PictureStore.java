@@ -5,6 +5,8 @@ import android.util.Log;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.Module;
+import dagger.ObjectGraph;
 import nl.qbusict.cupboard.DatabaseCompartment;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

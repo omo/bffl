@@ -35,4 +35,5 @@ public class App extends Application {
         mGraph.inject(target);
     }
     public <T> T make(Class<T> clazz) { return mGraph.get(clazz); }
+    public ObjectGraph plus(Object module) { return mGraph.plus(module); }
 }

@@ -49,7 +49,8 @@ public class BuildView extends CardView {
                 mHeadline.setText(buildPreso.getStatusText());
                 mReport.setText(String.format("%s", buildPreso.getReport()));
                 mTimestamp.setText(buildPreso.getTimestampText());
-                mImage.setImagePath(buildPreso.getImageURL());
+                if (buildPreso.hasImageURL())
+                    mImage.setImagePath(buildPreso.getImageURL());
                 mLastPreso = buildPreso;
             }
         });

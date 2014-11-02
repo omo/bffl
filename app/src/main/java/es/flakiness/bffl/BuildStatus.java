@@ -10,4 +10,13 @@ public enum BuildStatus {
     BuildStatus(int sequence) {
         mSequence = sequence;
     }
+
+    public static BuildStatus valueOf(int sequence) {
+        for (BuildStatus v : values()) {
+            if (v.sequence() == sequence)
+                return v;
+        }
+
+        return null;
+    }
 }

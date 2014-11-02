@@ -1,5 +1,8 @@
 package es.flakiness.bffl;
 
+import org.ocpsoft.prettytime.Duration;
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +10,8 @@ import java.util.Date;
 public class BuildPreso {
 
     static private SimpleDateFormat sFormatter = new SimpleDateFormat("yyyy/MM/dd-hh:mm:ss");
-    static private Date parseDate(String string) {
+
+    static public Date parseStubDate(String string) {
         try {
             return sFormatter.parse(string);
         } catch (ParseException e) {
@@ -21,14 +25,14 @@ public class BuildPreso {
         return new BuildPreso(
                 Build.create(
                         Long.valueOf(BuildStatus.FAILED.sequence()), "ninja -j 500 -C ./out/Debug chrome",
-                        parseDate("2014/11/01-21:00:01"), parseDate("2014/11/01-21:15:11")));
+                        parseStubDate("2014/11/01-21:00:01"), parseStubDate("2014/11/01-21:15:11")));
     }
 
     public static BuildPreso getMockPassInstance() {
         return new BuildPreso(
                 Build.create(
                         Long.valueOf(BuildStatus.PASSED.sequence()), "ninja -j 500 -C ./out/Debug blink_tests",
-                        parseDate("2014/11/01-09:00:01"), parseDate("2014/11/01-09:15:11")));
+                        parseStubDate("2014/11/01-09:00:01"), parseStubDate("2014/11/01-09:15:11")));
     }
 
     public BuildPreso(Build model) {
@@ -74,17 +78,15 @@ public class BuildPreso {
         return mModel.report;
     }
 
-    // XXX: impl
-    public String getDurationText() {
-        return "12 minutes";
-    }
-
-    // XXX: impl
-    public String getAgeText() {
-        return "1 minute";
-    }
-
     public String getTimestampText() {
-        return String.format("%s ago, took %s", getAgeText(), getDurationText());
+        PrettyTime finishTime = new PrettyTime(mModel.finishedAt);
+        Duration d = finishTime.approximateDuration(mModel.startedAt);
+        PrettyTime currentTime = new PrettyTime(now());
+        return String.format("%s, took %s", currentTime.format(mModel.finishedAt), finishTime.formatDuration(d));
+    }
+
+    // A testability hook
+    public Date now() {
+        return new Date();
     }
 }

@@ -5,19 +5,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import es.flakiness.views.PicassoView;
 import rx.functions.Action1;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements PicassoView.ContextRequirement {
 
     @Inject PictureStore mPictureStore;
+    @Inject Picasso mPicasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,5 +58,10 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Picasso getPicasso() {
+        return mPicasso;
     }
 }

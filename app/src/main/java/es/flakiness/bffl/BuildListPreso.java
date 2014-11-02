@@ -68,6 +68,7 @@ public class BuildListPreso implements ListAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         BuildView theView = null != view ? (BuildView)view : createView(viewGroup);
+        // TODO(morrita): Probably the observer should be pulled from View side instead of pushed from preso side.
         PublishSubject<BuildPreso> subj = PublishSubject.create();
         theView.present(subj);
         subj.onNext(i % 2 == 0 ? BuildPreso.getMockFailInstance() : BuildPreso.getMockPassInstance());

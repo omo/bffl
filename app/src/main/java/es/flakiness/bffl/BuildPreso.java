@@ -68,4 +68,8 @@ public class BuildPreso {
     public String getAgeText() {
         return "1 minute";
     }
+
+    public String getTimestampText() {
+        return String.format("%s ago, took %s", getAgeText(), getDurationText());
+    }
 }

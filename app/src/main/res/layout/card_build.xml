@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <ImageView
+        <es.flakiness.views.PicassoView
             android:id="@+id/build_card_image"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />

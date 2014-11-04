@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +36,9 @@ public class BuildView extends CardView {
 
     public BuildView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        LayoutInflater.from(context).inflate(R.layout.card_build, this, true);
+        ButterKnife.inject(this);
+        App.get(getContext()).inject(this);
     }
 
     public void present(BuildPreso preso) {
@@ -54,12 +58,5 @@ public class BuildView extends CardView {
             removeOnAttachStateChangeListener(mLastPreso);
         addOnAttachStateChangeListener(preso);
         mLastPreso = preso;
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.inject(this);
-        App.get(getContext()).inject(this);
     }
 }

@@ -63,13 +63,9 @@ public class BuildListPreso implements ListAdapter {
         return true;
     }
 
-    private BuildView createView(ViewGroup parent) {
-        return (BuildView)LayoutInflater.from(parent.getContext()).inflate(R.layout.card_build, parent, false);
-    }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        BuildView theView = null != view ? (BuildView)view : createView(viewGroup);
+        BuildView theView = null != view ? (BuildView)view : new BuildView(viewGroup.getContext());
         theView.present(i % 2 == 0 ? BuildPreso.getMockFailInstance(mPictureStore) : BuildPreso.getMockPassInstance(mPictureStore));
         return theView;
     }

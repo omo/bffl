@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<es.flakiness.bffl.BuildView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="200dp">
 
@@ -41,4 +41,4 @@
                 android:text=""/>
         </LinearLayout>
     </RelativeLayout>
-</es.flakiness.bffl.BuildView>
+</android.support.v7.widget.CardView>

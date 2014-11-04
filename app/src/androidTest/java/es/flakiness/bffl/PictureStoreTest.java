@@ -56,6 +56,12 @@ public class PictureStoreTest extends ApplicationTestCase<App> {
         assertTrue(0 < block(target.count()));
         block(target.clear());
         assertEquals(0, block(target.count()).intValue());
+    }
 
+    public void testFind() {
+        PictureStore target = createPictureStore();
+        Picture passPicture = BlockingObservable.from(target.find(Long.valueOf(BuildStatus.PASSED.sequence()), 1L)).last();
+        Picture failPicture = BlockingObservable.from(target.find(Long.valueOf(BuildStatus.FAILED.sequence()), 1L)).last();
+        assertTrue(passPicture.status != failPicture.status);
     }
 }

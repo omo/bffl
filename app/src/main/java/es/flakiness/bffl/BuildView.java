@@ -23,37 +23,37 @@ public class BuildView extends CardView {
     @InjectView(R.id.build_card_timestamp) TextView mTimestamp;
     @InjectView(R.id.build_card_report) TextView mReport;
 
-    private Subscription mSubscription;
     private BuildPreso mLastPreso;
 
     public BuildView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public BuildView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public BuildView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void present(Observable<BuildPreso> preso) {
-        assert mSubscription == null;
-        mSubscription = preso.subscribe(new Action1<BuildPreso>() {
+    public void present(BuildPreso preso) {
+        mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));
+        mHeadline.setText(preso.getStatusText());
+        mReport.setText(String.format("%s", preso.getReport()));
+        mTimestamp.setText(preso.getTimestampText());
+
+        preso.getImageURL().subscribe(new Action1<String>() {
             @Override
-            public void call(BuildPreso buildPreso) {
-                // TODO(morrita): Apply diff only.
-                // TODO(morrita): Ellipsize: http://stackoverflow.com/questions/4700650/how-do-i-set-the-android-text-view-to-cut-any-letters-that-dont-fit-in-a-layout
-                mTexts.setBackgroundColor(Color.argb(96, 0, 0, 0));
-                mHeadline.setText(buildPreso.getStatusText());
-                mReport.setText(String.format("%s", buildPreso.getReport()));
-                mTimestamp.setText(buildPreso.getTimestampText());
-                if (buildPreso.hasImageURL())
-                    mImage.setImagePath(buildPreso.getImageURL());
-                mLastPreso = buildPreso;
+            public void call(String path) {
+               mImage.setImagePath(path);
             }
         });
+
+        if (null != mLastPreso)
+            removeOnAttachStateChangeListener(mLastPreso);
+        addOnAttachStateChangeListener(preso);
+        mLastPreso = preso;
     }
 
     @Override
@@ -61,14 +61,5 @@ public class BuildView extends CardView {
         super.onFinishInflate();
         ButterKnife.inject(this);
         App.get(getContext()).inject(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (null != mSubscription) {
-            mSubscription.unsubscribe();
-            mSubscription = null;
-        }
     }
 }

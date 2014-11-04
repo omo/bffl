@@ -9,7 +9,7 @@ public class BuildPresoTest extends TestCase {
     static public class TestingBuildPreso extends BuildPreso {
 
         public TestingBuildPreso(Build model) {
-            super(model);
+            super(model, null);
         }
 
         @Override

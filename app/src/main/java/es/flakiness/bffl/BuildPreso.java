@@ -1,5 +1,7 @@
 package es.flakiness.bffl;
 
+import android.view.View;
+
 import org.ocpsoft.prettytime.Duration;
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -7,7 +9,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class BuildPreso {
+import javax.security.auth.Subject;
+
+import rx.Observable;
+import rx.functions.Func1;
+import rx.subjects.PublishSubject;
+import rx.subjects.ReplaySubject;
+
+public class BuildPreso implements View.OnAttachStateChangeListener {
 
     static private SimpleDateFormat sFormatter = new SimpleDateFormat("yyyy/MM/dd-hh:mm:ss");
 
@@ -20,36 +29,51 @@ public class BuildPreso {
     }
 
     private Build mModel;
+    private PictureStore mPictureStore;
 
-    public static BuildPreso getMockFailInstance() {
+    public static BuildPreso getMockFailInstance(PictureStore store) {
         return new BuildPreso(
                 Build.create(
                         Long.valueOf(BuildStatus.FAILED.sequence()), "ninja -j 500 -C ./out/Debug chrome",
-                        parseStubDate("2014/11/01-21:00:01"), parseStubDate("2014/11/01-21:15:11")));
+                        parseStubDate("2014/11/01-21:00:01"), parseStubDate("2014/11/01-21:15:11")), store);
     }
 
-    public static BuildPreso getMockPassInstance() {
+    public static BuildPreso getMockPassInstance(PictureStore store) {
         return new BuildPreso(
                 Build.create(
                         Long.valueOf(BuildStatus.PASSED.sequence()), "ninja -j 500 -C ./out/Debug blink_tests",
-                        parseStubDate("2014/11/01-09:00:01"), parseStubDate("2014/11/01-09:15:11")));
+                        parseStubDate("2014/11/01-09:00:01"), parseStubDate("2014/11/01-09:15:11")), store);
     }
 
-    public BuildPreso(Build model) {
+    public BuildPreso(Build model, PictureStore pictureStore) {
         mModel = model;
+        mPictureStore = pictureStore;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(View view) {
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(View view) {
+
     }
 
     public BuildStatus getStatus() {
         return BuildStatus.valueOf(mModel.status.intValue());
     }
 
-    public boolean hasImageURL() {
-        return getImageURL() != null;
-    }
-
-    public String getImageURL() {
-        // TODO: impl
-        return "https://farm3.staticflickr.com/2943/15158953820_54028b62e9_c.jpg";
+    public Observable<String> getImageURL() {
+        // TODO(morrita): Cancel on detach somehow.
+        Observable<Picture> pictureObservable = mPictureStore.find(mModel.status, mModel.finishedAt.hashCode());
+        return pictureObservable.map(new Func1<Picture, String>() {
+            @Override
+            public String call(Picture picture) {
+                // TODO(morrita): Select appropriate size
+                return picture.mediumImage;
+            }
+        });
     }
 
     public String getStatusText() {

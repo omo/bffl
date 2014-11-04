@@ -2,6 +2,8 @@ package es.flakiness.bffl;
 
 import android.util.Log;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -51,6 +53,17 @@ public class PictureStore {
                 return mDatabase.query(Picture.class).getCursor().getCount();
             }
         }, Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Observable<Picture> find(final Long status, long seed) {
+        // TODO: Cache things
+        return Async.start(new Func0<Picture>() {
+            @Override
+            public Picture call() {
+                List<Picture> found = mDatabase.query(Picture.class).withSelection("status = ? ", status.toString()).list();
+                return found.get(status.intValue() % found.size());
+            }
+        }, Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread());
     }
 
     private ConnectableObservable<TrivialResults> fillDefaultIfNeeded() {

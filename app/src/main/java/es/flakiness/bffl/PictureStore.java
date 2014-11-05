@@ -25,7 +25,7 @@ public class PictureStore {
     private ConnectableObservable<TrivialResults> mInitialDefaultIsFilled;
 
     @Inject
-    PictureStore(DatabaseCompartment database) {
+    public PictureStore(DatabaseCompartment database) {
         mDatabase = database;
         mInitialDefaultIsFilled = fillDefaultIfNeeded();
         mInitialDefaultIsFilled.connect();

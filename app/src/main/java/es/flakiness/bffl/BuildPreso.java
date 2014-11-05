@@ -8,10 +8,12 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.security.auth.Subject;
 
 import rx.Observable;
+import rx.android.operators.OperatorConditionalBinding;
 import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 import rx.subjects.ReplaySubject;
@@ -28,6 +30,7 @@ public class BuildPreso implements View.OnAttachStateChangeListener {
         }
     }
 
+    private AtomicPredicate mValid = new AtomicPredicate(true);
     private Build mModel;
     private PictureStore mPictureStore;
 
@@ -52,12 +55,11 @@ public class BuildPreso implements View.OnAttachStateChangeListener {
 
     @Override
     public void onViewAttachedToWindow(View view) {
-
     }
 
     @Override
     public void onViewDetachedFromWindow(View view) {
-
+        mValid.set(false);
     }
 
     public BuildStatus getStatus() {
@@ -65,12 +67,9 @@ public class BuildPreso implements View.OnAttachStateChangeListener {
     }
 
     public Observable<String> getImageURL() {
-        // TODO(morrita): Cancel on detach somehow.
-        Observable<Picture> pictureObservable = mPictureStore.find(mModel.status, mModel.finishedAt.hashCode());
-        return pictureObservable.map(new Func1<Picture, String>() {
+        return mPictureStore.find(mModel.status, mModel.finishedAt.hashCode()).lift(new OperatorConditionalBinding(this, mValid)).map(new Func1<Picture, String>() {
             @Override
             public String call(Picture picture) {
-                // TODO(morrita): Select appropriate size
                 return picture.mediumImage;
             }
         });
